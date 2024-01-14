@@ -29,11 +29,11 @@ public class ValidarDNI {
             return false;
     }
     public static void main(String[] args) {
-        String DNI = JOptionPane.showInputDialog(null, "Inserte el DNI a validar:");
+        String DNI = JOptionPane.showInputDialog(null, "Ponga un DNI para validarlo:");
         boolean valido = validarDNI(DNI);
         if (valido == true)
             JOptionPane.showMessageDialog(null, "El DNI indicado es válido");
         else
-            JOptionPane.showMessageDialog(null, "El DNI indicado no es válido");
+            JOptionPane.showMessageDialog(null, "El DNI indicado no es válido o no existe");
     }
 }

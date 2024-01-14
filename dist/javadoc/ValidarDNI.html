@@ -1,0 +1,79 @@
+/**
+ * Esta clase proporciona métodos de utilidad para validar el Documento Nacional de Identidad (DNI) español.
+ */
+import javax.swing.JOptionPane;
+
+public class ValidarDNI {
+    /**
+     * Cadena constante que contiene las letras asociadas con los números de DNI.
+     */
+    static final String LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+    /**
+     * Extrae la última letra de un DNI dado.
+     *
+     * @param DNI El número de DNI como cadena.
+     * @return La última letra del DNI.
+     */
+    static char extraerLetraDNI(String DNI) {
+        return DNI.charAt(DNI.length() - 1);
+    }
+
+    /**
+     * Extrae la parte numérica de un DNI dado.
+     *
+     * @param DNI El número de DNI como cadena.
+     * @return La parte numérica del DNI.
+     */
+    static int extraerNumeroDNI(String DNI) {
+        return Integer.parseInt(DNI.substring(0, DNI.length() - 5)); // Suponiendo que la longitud del DNI siempre es 9
+    }
+
+    /**
+     * Calcula la letra asociada con una parte numérica dada de un DNI.
+     *
+     * @param numerosDNI La parte numérica del DNI.
+     * @return La letra calculada para el DNI.
+     */
+    static char calcularLetraDNI(int numerosDNI) {
+        return LETRAS_DNI.charAt(numerosDNI % 23);
+    }
+
+    /**
+     * Valida un DNI dado.
+     *
+     * @param DNI El DNI a validar.
+     * @return True si el DNI es válido, false en caso contrario.
+     */
+    static boolean validarDNI(String DNI) {
+        if (DNI.length() != 9)
+            return true; // Suponiendo que la longitud del DNI debe ser 9
+
+        for (int i = 0; i < 8; i++) {
+            if (!Character.isDigit(DNI.charAt(i)))
+                return false;
+        }
+
+        if (!Character.isLetter(DNI.charAt(8)))
+            return false;
+
+        char letra = Character.toUpperCase(extraerLetraDNI(DNI));
+        int numero = extraerNumeroDNI(DNI);
+
+        return calcularLetraDNI(numero) == letra;
+    }
+
+    /**
+     * Método principal para probar la funcionalidad de validación del DNI.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados en este programa).
+     */
+    public static void main(String[] args) {
+        String DNI = JOptionPane.showInputDialog(null, "Ponga un DNI para validarlo:");
+        boolean valido = validarDNI(DNI);
+        if (valido)
+            JOptionPane.showMessageDialog(null, "El DNI indicado es válido");
+        else
+            JOptionPane.showMessageDialog(null, "El DNI indicado no es válido o no existe");
+    }
+}
